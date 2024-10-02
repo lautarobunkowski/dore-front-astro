@@ -10,8 +10,6 @@ const {slug} = Astro.params
 const getCategories = await axios.get(`http://localhost:1337/api/categorias?filters[slug][$ne]=${slug}&populate[imagen][fields][0]=url`)
 const categories: Categorie[] = getCategories.data.data
 
-console.log(categories)
-
 const getCategorie = await axios.get(`http://localhost:1337/api/categorias?filters[slug][$eq]=${slug}&populate[imagen][fields][0]=url&populate=items`)
 const categorie: Categorie = getCategorie.data.data[0];
 ---
