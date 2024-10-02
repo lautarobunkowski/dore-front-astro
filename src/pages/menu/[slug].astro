@@ -16,20 +16,22 @@ const getCategorie = await axios.get(`http://localhost:1337/api/categorias?filte
 const categorie: Categorie = getCategorie.data.data[0];
 ---
 
-<Layout title={slug}>
-    <div class="slider w-full overflow-scroll mb-4">
-        <ul class="flex w-fit gap-x-3 overflow-hidden">
-            {
-                categories.map((categorie => (
-                    <li class="w-[19vw] max-w-[100px]">
-                        <a href={`/menu/${categorie.slug}`}>
-                            <img src={`http://localhost:1337${categorie.imagen.url}`} alt={categorie.nombre} class="rounded-full border-2">
-                        <span class=" text-[9px] text-center font-medium flex justify-center my-1 uppercase">{categorie.nombre}</span>
-                        </a>
-                    </li>
-                )))
-            }
-        </ul>
+<Layout title={slug.replaceAll("-"," ")}>
+    <div class="w-full">
+        <div class="flex justify-start slider w-[calc(100%_+_30px)] sm:w-full overflow-scroll mb-4">
+            <ul class="flex w-fit gap-x-3">
+                {
+                    categories.map((categorie => (
+                        <li class="w-[19vw] max-w-[100px]">
+                            <a href={`/menu/${categorie.slug}`}>
+                                <img src={`http://localhost:1337${categorie.imagen.url}`} alt={categorie.nombre} class="rounded-full border-2">
+                            <span class=" text-[9px] text-center font-medium flex justify-center my-1 uppercase">{categorie.nombre}</span>
+                            </a>
+                        </li>
+                    )))
+                }
+            </ul>
+        </div>
     </div>
     <div class="relative w-full overflow-hidden rounded-xl mb-3 max-h-[125px] md:max-h-[200px]">
         <img src={`http://localhost:1337${categorie.imagen.url}`} alt={categorie.nombre} class="w-full object-cover aspect-video">
