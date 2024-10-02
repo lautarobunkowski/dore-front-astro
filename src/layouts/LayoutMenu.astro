@@ -11,7 +11,7 @@ const { title } = Astro.props;
 <Layout title={title}>
     <main>
         <div class="mb-5">
-            <img src="./logo-dore.svg" alt="dore-delicias" class="w-[120px] md:w-[182px]">
+            <img src="/logo-dore.svg" alt="dore-delicias" class="w-[120px] md:w-[182px]">
         </div>
         <slot></slot>
     </main>
@@ -27,17 +27,18 @@ const { title } = Astro.props;
 	main {
 		margin: auto;
 		width: 100%;
-		max-width: 577px;
+		max-width: 600px;
 		color: white;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-        padding: 12px;
+        padding: 10px;
 	}
 
 	html{
-		background-image: url("./background.jpg");
+		background-image: url("/background.jpg");
 		background-position: center;
+		padding: 50px 20px;
 	}
 </style>

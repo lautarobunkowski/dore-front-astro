@@ -1,9 +1,11 @@
 ---
 import Layout from '../layouts/LayoutMenu.astro';
 import axios from "axios";
+import { type Categorie } from "../types/Categories";
 
-const {data} = await axios.get("http://localhost:1337/api/categorias?fields[0]=nombre&populate[imagen][fields][0]=url")
-const categories = data.data;
+const {data} = await axios.get("http://localhost:1337/api/categorias?fields[0]=nombre&fields[1]=slug&populate[imagen][fields][0]=url")
+const categories: Categorie[] = data.data;
+
 ---
 
 <Layout title="Menu">
@@ -13,12 +15,14 @@ const categories = data.data;
 		<ul class="flex flex-wrap gap-x-[14px] gap-y-[17.9px] justify-center">
 			{
 				categories.map((categorie) => (
-					<li class="w-[calc(33.3%_-_10px)] rounded-xl overflow-hidden cursor-pointer">
-						<img src={"http://localhost:1337/"+categorie.imagen.url} alt={categorie.nombre}>
-						<div class="h-14 bg-white text-black flex justify-center items-center ">
-							<p class="font-bold w-20 text-[#334856] text-sm text-center">{categorie.nombre}</p>
-						</div>
-					</li>
+					<a href={`menu/${categorie.slug}`} class="w-[calc(33.3%_-_10px)]">
+						<li class="rounded-xl overflow-hidden">
+							<img src={"http://localhost:1337/"+categorie.imagen.url} alt={categorie.nombre}>
+							<div class="h-14 bg-white text-black flex justify-center items-center ">
+								<p class="font-bold w-20 text-[#334856] text-sm text-center">{categorie.nombre}</p>
+							</div>
+						</li>
+					</a>
 				))
 			}
 		</ul>
