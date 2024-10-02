@@ -11,19 +11,15 @@ const { title } = Astro.props;
 <Layout title={title}>
     <main>
         <div class="mb-5">
-            <img src="/logo-dore.svg" alt="dore-delicias" class="w-[120px] md:w-[182px]">
+            <a href="/">
+				<img src="/logo-dore.svg" alt="dore-delicias" class="w-[120px] md:w-[182px]">
+			</a>
         </div>
         <slot></slot>
     </main>
 </Layout>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-
-	*{
-		font-family: "Raleway", sans-serif;
-	}
-
 	main {
 		margin: auto;
 		width: 100%;

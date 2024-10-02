@@ -1,0 +1,56 @@
+---
+import axios from 'axios';
+import Layout from '../../layouts/LayoutMenu.astro';
+export const prerender = false;
+import { type Categorie } from "../../types/Categories";
+
+
+const {slug} = Astro.params
+
+const getCategories = await axios.get(`http://localhost:1337/api/categorias?filters[slug][$ne]=${slug}&populate[imagen][fields][0]=url`)
+const categories: Categorie[] = getCategories.data.data
+
+console.log(categories)
+
+const getCategorie = await axios.get(`http://localhost:1337/api/categorias?filters[slug][$eq]=${slug}&populate[imagen][fields][0]=url&populate=items`)
+const categorie: Categorie = getCategorie.data.data[0];
+---
+
+<Layout title={slug}>
+    <div class="slider w-full overflow-scroll mb-4">
+        <ul class="flex w-fit gap-x-3 overflow-hidden">
+            {
+                categories.map((categorie => (
+                    <li class="w-[19vw] max-w-[100px]">
+                        <a href={`/menu/${categorie.slug}`}>
+                            <img src={`http://localhost:1337${categorie.imagen.url}`} alt={categorie.nombre} class="rounded-full border-2">
+                        <span class=" text-[9px] text-center font-medium flex justify-center my-1 uppercase">{categorie.nombre}</span>
+                        </a>
+                    </li>
+                )))
+            }
+        </ul>
+    </div>
+    <div class="relative w-full overflow-hidden rounded-xl mb-3 max-h-[125px] md:max-h-[200px]">
+        <img src={`http://localhost:1337${categorie.imagen.url}`} alt={categorie.nombre} class="w-full object-cover aspect-video">
+        <img src="/logo-dore.svg" class="absolute bottom-[calc(50%_-_24px)] md:bottom-[calc(50%_-_48px)] right-4 w-12 md:w-24" alt={categorie.nombre}>
+        <p class="absolute bottom-3 left-4 font-bold text-xl">{categorie.nombre}</p>
+    </div>
+    <ul class="w-full mt-3">
+        {
+            categorie.items.map(item => (
+                <li class="bg-white w-full flex justify-between rounded-[28px] pt-[11px] pr-[30px] pb-[12px] pl-[12px] mb-[3px] text-black text-base">
+                    <p class="font-normal">{item.nombre}</p>
+                    <span class="font-bold">${item.precio}</span>
+                </li>
+            ))
+        }
+    </ul>
+</Layout>
+
+<style>
+    .slider::-webkit-scrollbar {
+  display: none; /* Oculta la barra de desplazamiento */
+}
+
+</style>
